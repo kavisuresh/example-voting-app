@@ -1,0 +1,17 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>localConnector-1.0</feature>
+        <feature>jsp-2.3</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint httpPort="9080" host="*" httpsPort="9443" id="defaultHttpEndpoint"/>
+                  
+
+
+    <applicationMonitor updateTrigger="mbean"/>
+
+    <webApplication id="VotingApp" contextRoot="/" location="VotingApp.war" name="VotingApp"/>
+</server>

@@ -1,0 +1,26 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+       <feature>localConnector-1.0</feature>
+        <feature>websocket-1.1</feature>
+        <feature>jdbc-4.0</feature>
+        <feature>json-1.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+                  
+    <dataSource id="postgres" jndiName="jdbc/postgres" type="javax.sql.XADataSource">
+    <jdbcDriver javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="SampleJDBCLib"/>
+    <properties databaseName="postgres" password="" portNumber="5432" serverName="db" user="postgres"/>
+    </dataSource>
+    <library id="SampleJDBCLib">
+    <fileset dir="${shared.resource.dir}/PostgresLibs" includes="postgresql-9.4-1206.jdbc4.jar"/>
+    </library>
+
+
+    <applicationMonitor updateTrigger="mbean"/>
+
+    <webApplication contextRoot="/" id="ResultApp" location="ResultApp.war" name="ResultApp"/>
+</server>

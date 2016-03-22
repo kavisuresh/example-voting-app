@@ -1,18 +1,17 @@
-# Using official python runtime base image
-FROM python:2.7
-
-# Set the application directory
+FROM websphere-liberty:kernel
+RUN apt-get update -qq && apt-get install -y maven && apt-get clean
 WORKDIR /app
+ADD pom.xml /app/pom.xml
 
-# Install our requirements.txt
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
+RUN ["mvn", "dependency:resolve"]
 
-# Copy our code from the current folder to /app inside the container
+# Adding source, compile and package into a fat jar
 ADD . /app
+RUN ["mvn", "package"]
 
-# Make port 5000 available for links and/or publish
-EXPOSE 80 
+RUN cp /app/target/VotingApp.war /opt/ibm/wlp/usr/servers/defaultServer/apps/
+COPY server.xml /opt/ibm/wlp/usr/servers/defaultServer/
 
-# Define our command to be run when launching the container
-CMD ["python", "app.py"]
+ENV JAVA_HOME=/opt/ibm/java
+RUN installUtility install --acceptLicense defaultServer

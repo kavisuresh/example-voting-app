@@ -1,0 +1,119 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Cats vs Dogs -- Result</title>
+    <base href="index.html">
+    <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
+    <meta name="keywords" content="docker-compose, docker, stack">
+    <link rel='stylesheet' href="style.css" />
+  </head>
+
+  <body onload=openSocket()>
+     <div id="background-stats">
+       <div id="background-stats-1">
+       </div><!--
+      --><div id="background-stats-2">
+      </div>
+    </div>
+    <div id="content-container">
+      <div id="content-container-center">
+        <div id="choice">
+          <div class="choice cats">
+            <div class="label">Cats</div>
+            <div id="stat1"></div>
+          </div>
+          <div class="divider"></div>
+          <div class="choice dogs">
+            <div class="label">Dogs</div>
+            <div id="stat2"></div>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div id="messages"></div>
+     <!-- Java script for websockets -->
+        <script type="text/javascript">
+
+            var connection;
+            var messages = document.getElementById("messages");
+        
+            var stat1 = document.getElementById("stat1");
+            var stat2 = document.getElementById("stat2");
+            var bg1 = document.getElementById('background-stats-1');
+            var bg2 = document.getElementById('background-stats-2');
+            
+            function openSocket(){
+                // Ensures only one connection is open at a time
+                if(connection !== undefined && connection.readyState !== connection.CLOSED){
+                   writeResponse("WebSocket is already opened.");
+                    return;
+                }
+                // Create a new instance of the websocket
+                connection = new WebSocket('ws://' + window.document.location.host + '/result');
+                 
+                /* Binds the listeners to socket */
+                connection.onopen = function(event){
+                    if(event.data === undefined)
+                        return;
+ 
+                    writeResponse(event.data);
+                };
+ 
+                connection.onmessage = function(event){
+                    var obj = JSON.parse(event.data);
+                    var vote1 = obj.Vote1;
+                    var count1 = obj.Count1;
+                    var vote2 = obj.Vote2;
+                    var count2 = obj.Count2;
+                    var a;
+                    var b;
+                    
+                    if (vote1 == "a")
+                    {
+                    	a=parseInt(count1);
+                    	b=parseInt(count2);
+                    
+                    }
+                    else
+                    {
+                    	a=parseInt(count2);
+                    	b=parseInt(count1);
+                    	
+                    }
+                   
+                    var percentA = a/(a+b)*100;
+                    var percentB = 100-percentA;
+                 
+                    bg1.style.width= percentA+"%";
+                    bg2.style.width = percentB+"%";
+                    writeStat1(Math.round(percentA));
+                    writeStat2(Math.round(percentB));
+                };
+ 
+                connection.onclose = function(event){
+                    writeResponse("Connection closed");
+                };
+                
+            }
+           
+           
+           /* Close the socket */
+            function closeSocket(){
+                connection.close();
+            }
+ 
+            function writeResponse(text){
+                messages.innerHTML += "<br/>" + text;
+            }
+            function writeStat1(text){
+                stat1.innerHTML = text+"%";
+             
+            }
+            function writeStat2(text){
+                stat2.innerHTML = text+"%";
+            }
+           
+        </script>    
+  </body>
+</html>
