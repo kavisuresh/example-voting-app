@@ -1,12 +1,13 @@
 FROM websphere-liberty:kernel
 RUN apt-get update -qq && apt-get install -y maven && apt-get clean
+
 WORKDIR /app
 ADD pom.xml /app/pom.xml
 
 ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
 RUN ["mvn", "dependency:resolve"]
 
-# Adding source, compile and package into a fat jar
+# Adding source, compile and package into a war file
 ADD . /app
 RUN ["mvn", "package"]
 

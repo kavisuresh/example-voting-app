@@ -11,7 +11,7 @@ ADD . /app
 RUN ["mvn", "package"]
 
 RUN cp /app/target/ResultApp.war /opt/ibm/wlp/usr/servers/defaultServer/apps/
-COPY postgresql-9.4-1206.jdbc4.jar  /opt/ibm/wlp/usr/shared/resources/PostgresLibs/
+COPY db2*.jar  /opt/ibm/wlp/usr/shared/resources/DB2Libs/
 COPY server.xml /opt/ibm/wlp/usr/servers/defaultServer/
 
 ENV JAVA_HOME=/opt/ibm/java

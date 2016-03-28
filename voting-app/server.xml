@@ -8,8 +8,6 @@
 
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint httpPort="9080" host="*" httpsPort="9443" id="defaultHttpEndpoint"/>
-                  
-
 
     <applicationMonitor updateTrigger="mbean"/>
 

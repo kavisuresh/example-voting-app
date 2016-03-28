@@ -10,17 +10,18 @@
 
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
-                  
-    <dataSource id="postgres" jndiName="jdbc/postgres" type="javax.sql.XADataSource">
-    <jdbcDriver javax.sql.XADataSource="org.postgresql.xa.PGXADataSource" libraryRef="SampleJDBCLib"/>
-    <properties databaseName="postgres" password="" portNumber="5432" serverName="db" user="postgres"/>
-    </dataSource>
-    <library id="SampleJDBCLib">
-    <fileset dir="${shared.resource.dir}/PostgresLibs" includes="postgresql-9.4-1206.jdbc4.jar"/>
-    </library>
+    
+        <jdbcDriver id="DB2Driver" libraryRef="DB2JCC4Lib"/>
+
+        <library filesetRef="DB2Fileset" id="DB2JCC4Lib"/>
+        <fileset dir="${shared.resource.dir}/DB2Libs" id="DB2Fileset" includes="db2jcc4.jar db2jcc_license_cisuz.jar"/>
+
+        <dataSource id="empDS" jdbcDriverRef="DB2Driver" jndiName="jdbc/db2">
+                <properties.db2.jcc databaseName="DB2" password="db2inst1" portNumber="50000" serverName="db" user="db2inst1"/>
+        </dataSource> 
 
 
-    <applicationMonitor updateTrigger="mbean"/>
+     applicationMonitor updateTrigger="mbean"/>
 
     <webApplication contextRoot="/" id="ResultApp" location="ResultApp.war" name="ResultApp"/>
 </server>

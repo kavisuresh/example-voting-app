@@ -67,12 +67,12 @@ class Worker {
 
     try {
 
-      Class.forName("org.postgresql.Driver");
-      String url = "jdbc:postgresql://" + host + "/postgres";
+      Class.forName("com.ibm.db2.jcc.DB2Driver");
+      String url = "jdbc:db2://"+ host +":50000/DB2";
 
       while (conn == null) {
         try {
-          conn = DriverManager.getConnection(url, "postgres", "");
+          conn = DriverManager.getConnection(url, "db2inst1", "db2inst1");
         } catch (SQLException e) {
           System.err.println("Failed to connect to db - retrying");
           sleep(1000);
@@ -80,7 +80,7 @@ class Worker {
       }
 
       PreparedStatement st = conn.prepareStatement(
-        "CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)");
+        "CREATE TABLE votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)");
       st.executeUpdate();
 
     } catch (ClassNotFoundException e) {

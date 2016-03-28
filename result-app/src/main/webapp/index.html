@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <title>Cats vs Dogs -- Result</title>
+    <title>Coke vs Pepsi -- Result</title>
     <base href="index.html">
     <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
     <meta name="keywords" content="docker-compose, docker, stack">
@@ -19,13 +19,13 @@
     <div id="content-container">
       <div id="content-container-center">
         <div id="choice">
-          <div class="choice cats">
-            <div class="label">Cats</div>
+          <div class="choice coke">
+            <div class="label">Coke</div>
             <div id="stat1"></div>
           </div>
           <div class="divider"></div>
-          <div class="choice dogs">
-            <div class="label">Dogs</div>
+          <div class="choice pepsi">
+            <div class="label">Pepsi</div>
             <div id="stat2"></div>
           </div>
         </div>
@@ -87,6 +87,7 @@
                  
                     bg1.style.width= percentA+"%";
                     bg2.style.width = percentB+"%";
+                    
                     writeStat1(Math.round(percentA));
                     writeStat2(Math.round(percentB));
                 };

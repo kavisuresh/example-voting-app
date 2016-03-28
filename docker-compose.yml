@@ -40,9 +40,15 @@ services:
       - back-tier
 
   db:
-    image: postgres:9.4
+    build: ./db2/.
+    ports: 
+       - "50000:50000"
+    environment:
+      DB2INST1_PASSWORD: db2inst1
+      LICENSE: accept
+    command: db2start
     volumes:
-      - "db-data:/var/lib/postgresql/data"
+      - "db-data:/home/db2inst1/db2inst1"
     networks:
       - back-tier
 

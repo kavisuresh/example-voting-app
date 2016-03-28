@@ -36,9 +36,6 @@ public class Result {
 			try {
 				conn=connectToDB("db");
 				Statement stmt = conn.createStatement();
-				PreparedStatement st = conn.prepareStatement(
-					"CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)");
-				st.executeUpdate();
 				while(true)
 				{
 					ResultSet result = stmt.executeQuery("SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote");       
@@ -97,7 +94,7 @@ public class Result {
 	}
 
 
-	@Resource(name = "jdbc/postgres")
+	@Resource(name = "jdbc/db2")
 	DataSource ds1;
 	Connection connectToDB(String host) throws SQLException {
 		Connection conn = null;
