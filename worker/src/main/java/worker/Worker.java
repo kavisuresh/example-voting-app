@@ -83,6 +83,9 @@ class Worker {
         "CREATE TABLE votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)");
       st.executeUpdate();
 
+    }catch (SQLException e) {
+      System.err.println("Table Already exists , so not recreating ");
+    
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.exit(1);
