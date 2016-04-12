@@ -8,7 +8,8 @@ services:
     ports:
       - "5000:9080"
     links:
-      - redis
+      - "wxs-cat:wxs"
+      - wxs-con
     networks:
       - front-tier
       - back-tier
@@ -29,14 +30,24 @@ services:
     build: ./worker
     links:
       - db
-      - redis
+      - "wxs-cat:wxs"
+      - wxs-con
     networks:
       - back-tier
 
-  redis:
-    image: redis
-    ports: ["6379"]
+  wxs-cat:
+    build: ./wxs_cat
+    ports:
+      - "2809:2809"
+    hostname: wxs
     networks:
+      - back-tier
+ 
+  wxs-con:
+   build: ./wxs_con
+   links:
+      - "wxs-cat:wxs"
+   networks:
       - back-tier
 
   db:

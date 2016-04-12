@@ -10,14 +10,32 @@
 </head>
 <body>
 <%@ page import = "java.sql.*" %>
-<%@ page import = "redis.clients.jedis.Jedis" %>
-<%@ page import = "redis.clients.jedis.exceptions.JedisConnectionException" %>
 <%@ page import = "org.json.JSONObject" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ClientClusterContext" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ConnectException" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectGridRuntimeException" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectGrid" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectGridException" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectGridManager" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectGridManagerFactory" %>
+<%@ page import = "com.ibm.websphere.objectgrid.ObjectMap" %>
+<%@ page import = "com.ibm.websphere.objectgrid.Session" %>
 
-<%! Jedis jedis; %>
+<%! ObjectGrid og; %>
+<%! Session sess; %>
+<%! ObjectMap map; %>
+
 <%!
 public void jspInit(){
-	jedis =connectToRedis("redis");
+   try{
+        og = getObjectGrid("wxs:2809", "Grid");
+        sess = og.getSession();
+        map = sess.getMap("Votes");
+   }catch (ConnectException e) {
+      e.printStackTrace();
+   }catch (ObjectGridException e) {
+      e.printStackTrace();
+  }
 }
 %>
 <%
@@ -37,29 +55,49 @@ public void jspInit(){
   JSONObject obj = new JSONObject();
   obj.put("vote",vote);
   obj.put("voter_id",voter_id);
-  jedis.rpush("votes", obj.toString()); 
+  try{
+  map.upsert("votes", obj.toString()); 
+  } catch (ObjectGridException e) {
+      e.printStackTrace();
+  }
 %>
 <%!
-    static Jedis connectToRedis(String host) {
-    Jedis conn = new Jedis(host);
+  static protected ObjectGrid getObjectGrid(String csEndpoints, String gridName) throws ConnectException {
 
-    while (true) {
-      try {
-        conn.keys("*");
-        break;
-      } catch (JedisConnectionException e) {
-        System.err.println("Failed to connect to redis - retrying");
+  ObjectGrid result = null;         
+        
+  ObjectGridManager ogm = ObjectGridManagerFactory.getObjectGridManager();
+  
+  ClientClusterContext ccc = null;
+  while (true) {
         try {
-    	    Thread.sleep(3000);                 //1000 milliseconds is one second.
-    	} catch(InterruptedException ex) {
-    	    Thread.currentThread().interrupt();
-    	}
-      }
-    }
-   
-    System.out.println("Connected to redis");
-    return conn;
+            ccc = ogm.connect(csEndpoints,     null, null);
+            break;
+  } catch (ConnectException e) {
+        System.err.println("Failed to connect to wxs  - retrying");
+        try {
+            Thread.sleep(3000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
   }
+  }
+  while (true) {
+        try {
+            result = ogm.getObjectGrid(ccc, gridName);
+            break;
+        } catch (ObjectGridRuntimeException e) {
+        System.err.println("Failed to connect to GRID  - retrying");
+        try {
+            Thread.sleep(3000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        }
+  }
+        
+  return result;
+}
 %>
 <div id="content-container">
       <div id="content-container-center">

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        This is a sample grid descriptor file for IBM-Dokcer POT/Workshop
+        Licensed Materials - Property of IBM
+        5724-J34 (C) COPYRIGHT International Business Machines Corp. 2012
+-->
+
+<objectGridConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://ibm.com/ws/objectgrid/config ../objectGrid.xsd"
+ xmlns="http://ibm.com/ws/objectgrid/config">
+
+  <objectGrids>
+    <objectGrid name="Grid" txTimeout="15">
+
+      <backingMap name="Votes" copyMode="COPY_TO_BYTES"
+                lockStrategy="PESSIMISTIC"
+                nullValuesSupported="false" />
+
+    </objectGrid>
+  </objectGrids>
+
+</objectGridConfig>

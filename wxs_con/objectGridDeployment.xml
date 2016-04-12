@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        This is a sample grid deployment file for IBM-Docker POT/Workshop
+        Licensed Materials - Property of IBM
+        5724-J34 (C) COPYRIGHT International Business Machines Corp. 2012
+-->
+
+<deploymentPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://ibm.com/ws/objectgrid/deploymentPolicy ../deploymentPolicy.xsd"
+ xmlns="http://ibm.com/ws/objectgrid/deploymentPolicy">
+
+    <objectgridDeployment objectgridName="Grid">
+        <mapSet name="votingMapSet" numberOfPartitions="11" minSyncReplicas="0" maxSyncReplicas="0" >
+            <map ref="Votes"/>
+        </mapSet>
+    </objectgridDeployment>
+
+</deploymentPolicy>

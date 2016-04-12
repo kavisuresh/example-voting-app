@@ -19,13 +19,6 @@
       <artifactId>json</artifactId>
       <version>20140107</version>
     </dependency>
-    <dependency>
-        <groupId>redis.clients</groupId>
-        <artifactId>jedis</artifactId>
-        <version>2.7.2</version>
-        <type>jar</type>
-        <scope>compile</scope>
-    </dependency>
   </dependencies>
   <build>
     <finalName>VotingApp</finalName>

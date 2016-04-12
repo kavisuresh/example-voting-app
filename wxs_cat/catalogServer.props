@@ -1,0 +1,5 @@
+workingDirectory=/opt/ibm/wxs
+listenerPort=2809
+JMXServicePort=1099
+transport=XIO
+isCatalog=true
