@@ -1,6 +1,6 @@
-FROM java:7
+FROM java:8-alpine
 
-RUN apt-get update -qq && apt-get install -y maven && apt-get clean
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk add --update maven
 
 WORKDIR /code
 
