@@ -7,9 +7,6 @@ services:
      - ./voting-app:/app
     ports:
       - "5000:9080"
-    links:
-      - "wxs-cat:wxs"
-      - wxs-con
     networks:
       - front-tier
       - back-tier
@@ -20,18 +17,12 @@ services:
       - ./result-app:/app
     ports:
       - "5001:9080"
-    links:
-      - db
     networks:
       - front-tier
       - back-tier
 
   worker:
     build: ./worker
-    links:
-      - db
-      - "wxs-cat:wxs"
-      - wxs-con
     networks:
       - back-tier
 
@@ -41,12 +32,12 @@ services:
       - "2809:2809"
     hostname: wxs
     networks:
-      - back-tier
+      back-tier:
+        aliases:
+            - wxs
  
   wxs-con:
    build: ./wxs_con
-   links:
-      - "wxs-cat:wxs"
    networks:
       - back-tier
 
