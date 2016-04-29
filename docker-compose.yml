@@ -7,9 +7,6 @@ services:
      - ./voting-app:/app
     ports:
       - "5000:9080"
-    links:
-      - "wxs-cat:wxs"
-      - wxs-con
     networks:
       - front-tier
       - back-tier
@@ -20,44 +17,38 @@ services:
       - ./result-app:/app
     ports:
       - "5001:9080"
-    links:
-      - db
     networks:
       - front-tier
       - back-tier
 
   worker:
     build: ./worker
-    links:
-      - db
-      - "wxs-cat:wxs"
-      - wxs-con
     networks:
       - back-tier
 
   wxs-cat:
     build: ./wxs_cat
-    ports:
-      - "2809:2809"
     hostname: wxs
+    expose:
+      - "2809"
     networks:
-      - back-tier
+      back-tier:
+        aliases:
+            - wxs
  
   wxs-con:
    build: ./wxs_con
-   links:
-      - "wxs-cat:wxs"
    networks:
       - back-tier
 
   db:
     build: ./db2/.
-    ports: 
-       - "50000:50000"
     environment:
       DB2INST1_PASSWORD: db2inst1
       LICENSE: accept
     command: db2start
+    expose:
+      - "50000"
     volumes:
       - "db-data:/home/db2inst1/db2inst1"
     networks:
