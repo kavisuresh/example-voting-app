@@ -38,6 +38,8 @@ services:
  
   wxs-con:
    build: ./wxs_con
+   depends_on:
+      - wxs-cat
    networks:
       - back-tier
 

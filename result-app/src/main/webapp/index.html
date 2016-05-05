@@ -42,6 +42,15 @@
             var stat2 = document.getElementById("stat2");
             var bg1 = document.getElementById('background-stats-1');
             var bg2 = document.getElementById('background-stats-2');
+
+            var percentA = 50;
+            var percentB = 50;
+
+            bg1.style.width= percentA+"%";
+            bg2.style.width = percentB+"%";
+
+            writeStat1(Math.round(percentA));
+            writeStat2(Math.round(percentB));
             
             function openSocket(){
                 // Ensures only one connection is open at a time
@@ -71,19 +80,22 @@
                     
                     if (vote1 == "a")
                     {
-                    	a=parseInt(count1);
-                    	b=parseInt(count2);
+                    	a=parseInt(count1 || 0);
+                    	b=parseInt(count2 || 0);
                     
                     }
                     else
                     {
-                    	a=parseInt(count2);
-                    	b=parseInt(count1);
+                    	a=parseInt(count2 || 0);
+                    	b=parseInt(count1 || 0);
                     	
                     }
                    
-                    var percentA = a/(a+b)*100;
-                    var percentB = 100-percentA;
+                    if ( a+b > 0 )
+                    {
+                        percentA = a/(a+b)*100;
+                        percentB = 100-percentA;
+                    }
                  
                     bg1.style.width= percentA+"%";
                     bg2.style.width = percentB+"%";
