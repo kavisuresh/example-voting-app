@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Coke vs Pepsi!</title>
+<title>Apples vs Oranges!</title>
 <link rel='stylesheet' href="style.css" /> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
@@ -45,12 +45,12 @@ public void jspInit(){
   String vote1 ="";
   if (vote.equals("a"))
   { 
-	  vote1 = "Coke";
+	  vote1 = "Apples";
   }
   else if (vote.equals("b"))
   {
 	  
-	  vote1 = "Pepsi";
+	  vote1 = "Oranges";
   }
   JSONObject obj = new JSONObject();
   obj.put("vote",vote);
@@ -101,14 +101,14 @@ public void jspInit(){
 %>
 <div id="content-container">
       <div id="content-container-center">
-        <h3>Coke vs Pepsi!</h3>
+        <h3>Apples vs Oranges!</h3>
         <form id="choice" name='form' method="POST" action="VotingApp.jsp">
         <%  if (vote.equals("a")){ %>
-          <button id="a" type="submit" name="vote" class="a" value="a" disabled><i class="fa fa-check-circle"></i>Coke</button>
-          <button id="b" type="submit" name="vote" class="b" value="b">Pepsi</button>
+          <button id="a" type="submit" name="vote" class="a" value="a" disabled><i class="fa fa-check-circle"></i>Apples</button>
+          <button id="b" type="submit" name="vote" class="b" value="b">Oranges</button>
         <% } else if(vote.equals("b")) { %>
-          <button id="a" type="submit" name="vote" class="a" value="a">Coke</button>
-          <button id="b" type="submit" name="vote" class="b" value="b" disabled><i class="fa fa-check-circle"></i>Pepsi</button>
+          <button id="a" type="submit" name="vote" class="a" value="a">Apples</button>
+          <button id="b" type="submit" name="vote" class="b" value="b" disabled><i class="fa fa-check-circle"></i>Oranges</button>
         <% } %>  
         </form>   
         <div id="tip">

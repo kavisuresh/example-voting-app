@@ -86,12 +86,12 @@ body{
   text-transform: uppercase;
 }
 
-#choice .choice.pepsi{
+#choice .choice.oranges{
   color: #00cbca;
   float: right;
 }
 
-#choice .choice.coke{
+#choice .choice.apples{
   color: #2196f3;
   float: left;
 }
