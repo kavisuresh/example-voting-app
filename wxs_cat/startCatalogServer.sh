@@ -7,8 +7,6 @@
 #                                                                                   #
 #####################################################################################
 
-CATALOG_SERVER_NAME
-
 #Check whether catalog server name is provided or use default
 if [ "$CATALOG_SERVER_NAME" = "" ]
 then

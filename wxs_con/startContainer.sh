@@ -7,8 +7,6 @@
 #                                                                                   #
 #####################################################################################
 
-CONTAINER_NAME
-
 #Check whether catalog server name is provided or use default
 if [ "$CONTAINER_NAME" = "" ]
 then

@@ -1,9 +1,9 @@
 FROM websphere-liberty:kernel
-RUN apt-get update -qq && apt-get install -y maven && apt-get clean && apt-get -y install openjdk-7-jdk
+RUN apt-get update -qq && apt-get install -y maven && apt-get clean && apt-get -y install openjdk-8-jdk
 WORKDIR /app
 ADD pom.xml /app/pom.xml
 
-ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 RUN ["mvn", "dependency:resolve"]
 
 # Adding source, compile and package into a fat jar
