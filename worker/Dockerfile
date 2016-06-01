@@ -1,6 +1,6 @@
-FROM java:8-alpine
+FROM ibmcom/ibmjava:sdk
 
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk add --update maven
+RUN apt-get update -qq && apt-get install -y maven && apt-get clean
 
 WORKDIR /code
 
