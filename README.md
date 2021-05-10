@@ -23,3 +23,5 @@ Run in this directory:
 
 The app will be running on port 5000 on your Docker host, and the results will be on port 5001.
 
+Testing CRA
+
